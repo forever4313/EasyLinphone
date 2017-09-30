@@ -1,4 +1,4 @@
-package com.xuchongyang.easyphone;
+package com.xuchongyang.easyphone.linphone;
 
 import android.content.Context;
 import android.util.Log;
@@ -76,25 +76,27 @@ public class LinphoneUtils {
         mLinphoneCore.setDefaultProxyConfig(prxCfg);
     }
 
-    public LinphoneCall startSingleCallingTo(PhoneBean bean) {
+    public LinphoneCall startSingleCallingTo(PhoneBean bean, boolean isVideoCall) {
         LinphoneAddress address;
         LinphoneCall call = null;
         try {
             address = mLinphoneCore.interpretUrl(bean.getUserName() + "@" + bean.getHost());
         } catch (LinphoneCoreException e) {
             e.printStackTrace();
-            Log.e("startSingleCallingTo", " LinphoneCoreException0:" + e.toString());
             return null;
         }
         address.setDisplayName(bean.getDisplayName());
-//        LinphoneCallParams params = mLinphoneCore.createDefaultCallParameters();
         LinphoneCallParams params = mLinphoneCore.createCallParams(null);
-        params.setVideoEnabled(false);
+        if (isVideoCall) {
+            params.setVideoEnabled(true);
+            params.enableLowBandwidth(false);
+        } else {
+            params.setVideoEnabled(false);
+        }
         try {
             call = mLinphoneCore.inviteAddressWithParams(address, params);
         } catch (LinphoneCoreException e) {
             e.printStackTrace();
-            Log.e("startSingleCallingTo", " LinphoneCoreException1:" + e.toString());
         }
         return call;
     }

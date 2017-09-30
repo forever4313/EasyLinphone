@@ -1,13 +1,12 @@
-package com.xuchongyang.easyphone;
+package com.xuchongyang.easyphone.linphone;
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.os.Handler;
 import android.os.Looper;
 
+
+import com.xuchongyang.easyphone.R;
 
 import org.linphone.core.LinphoneAddress;
 import org.linphone.core.LinphoneAuthInfo;
@@ -158,6 +157,8 @@ public class LinphoneManager implements LinphoneCoreListener {
         mLc.setChatDatabasePath(mChatDatabaseFile);
 //        mLc.setCallErrorTone(Reason.NotFound, mErrorToneFile);//设置呼叫错误播放的铃声
 
+        setBackCamAsDefault();
+
         int availableCores = Runtime.getRuntime().availableProcessors();
         Log.w(TAG, "MediaStreamer : " + availableCores + " cores detected and configured");
         mLc.setCpuCount(availableCores);
@@ -177,6 +178,14 @@ public class LinphoneManager implements LinphoneCoreListener {
 
         //audio 码率设置
         LinphoneUtils.getConfig(mServiceContext).setInt("audio", "codec_bitrate_limit", 36);
+
+        mLc.setPreferredVideoSizeByName("720p");
+        mLc.setUploadBandwidth(1536);
+        mLc.setDownloadBandwidth(1536);
+
+        mLc.setVideoPolicy(mLc.getVideoAutoInitiatePolicy(), true);
+        mLc.setVideoPolicy(true, mLc.getVideoAutoAcceptPolicy());
+        mLc.enableVideo(true, true);
 
         // 设置编码格式
         setCodecMime();
@@ -208,6 +217,14 @@ public class LinphoneManager implements LinphoneCoreListener {
 //                    e.printStackTrace();
 //                }
 //            }
+        }
+        for (PayloadType payloadType : mLc.getVideoCodecs()) {
+            try {
+                android.util.Log.e(TAG, "setCodecMime: mime: " + payloadType.getMime() + " rate: " + payloadType.getRate());
+                mLc.enablePayloadType(payloadType, true);
+            } catch (LinphoneCoreException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -417,5 +434,18 @@ public class LinphoneManager implements LinphoneCoreListener {
     @Override
     public void configuringStatus(LinphoneCore linphoneCore, LinphoneCore.RemoteProvisioningState remoteProvisioningState, String s) {
 
+    }
+
+    private void setBackCamAsDefault() {
+//        int camId = 0;
+//        AndroidCameraConfiguration.AndroidCamera[] cameras = AndroidCameraConfiguration.retrieveCameras();
+//        for (AndroidCameraConfiguration.AndroidCamera androidCamera :
+//                cameras) {
+//            if (!androidCamera.frontFacing) {
+//                camId = androidCamera.id;
+//            }
+//        }
+//        android.util.Log.e(TAG, "setBackCamAsDefault: cameraId is " + camId);
+        mLc.setVideoDevice(0);
     }
 }

@@ -2,12 +2,18 @@ package com.xuchongyang.easyphone;
 
 import android.content.Context;
 import android.content.Intent;
+import android.view.SurfaceView;
 
 import com.xuchongyang.easyphone.callback.PhoneCallback;
 import com.xuchongyang.easyphone.callback.RegistrationCallback;
+import com.xuchongyang.easyphone.linphone.LinphoneManager;
+import com.xuchongyang.easyphone.linphone.LinphoneUtils;
+import com.xuchongyang.easyphone.linphone.PhoneBean;
+import com.xuchongyang.easyphone.service.LinphoneService;
 
 import org.linphone.core.LinphoneCore;
 import org.linphone.core.LinphoneCoreException;
+import org.linphone.mediastream.video.AndroidVideoWindowImpl;
 
 /**
  * Created by Mark Xu on 2017/9/20.
@@ -17,6 +23,8 @@ import org.linphone.core.LinphoneCoreException;
 public class EasyLinphone {
     private static ServiceWaitThread mServiceWaitThread;
     private static String mUsername, mPassword, mServerIP;
+    private static AndroidVideoWindowImpl mAndroidVideoWindow;
+    private static SurfaceView mRenderingView, mPreviewView;
 
     /**
      * 开启服务
@@ -24,7 +32,9 @@ public class EasyLinphone {
      */
     public static void startService(Context context) {
         if (!LinphoneService.isReady()) {
-            context.startService(new Intent(Intent.ACTION_MAIN).setClass(context, LinphoneService.class));
+            Intent intent = new Intent(Intent.ACTION_MAIN);
+            intent.setClass(context, LinphoneService.class);
+            context.startService(intent);
         }
     }
 
@@ -71,7 +81,7 @@ public class EasyLinphone {
      * 呼叫指定号码
      * @param num 呼叫号码
      */
-    public static void callTo(String num) {
+    public static void callTo(String num, boolean isVideoCall) {
         if (!LinphoneService.isReady() || !LinphoneManager.isInstanceiated()) {
             return;
         }
@@ -79,7 +89,7 @@ public class EasyLinphone {
             PhoneBean phone = new PhoneBean();
             phone.setUserName(num);
             phone.setHost(mServerIP);
-            LinphoneUtils.getInstance().startSingleCallingTo(phone);
+            LinphoneUtils.getInstance().startSingleCallingTo(phone, isVideoCall);
         }
     }
 
@@ -154,6 +164,25 @@ public class EasyLinphone {
         } catch (LinphoneCoreException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void setVideoWindow(Object o) {
+        LinphoneManager.getLc().setVideoWindow(o);
+    }
+
+    public static void removeVideoWindow() {
+        LinphoneCore linphoneCore = LinphoneManager.getLc();
+        if (linphoneCore != null) {
+            linphoneCore.setVideoWindow(null);
+        }
+    }
+
+    public static void setPreviewWindow(Object o) {
+        LinphoneManager.getLc().setPreviewWindow(o);
+    }
+
+    public static void removePreviewWindow() {
+        LinphoneManager.getLc().setPreviewWindow(null);
     }
 
     public static LinphoneCore getLC() {

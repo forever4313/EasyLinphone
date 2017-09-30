@@ -8,11 +8,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.xuchongyang.easyphone.EasyLinphone;
-import com.xuchongyang.easyphone.LinphoneService;
-import com.xuchongyang.easyphone.callback.PhoneCallback;
+import com.xuchongyang.easyphone.service.LinphoneService;
 import com.xuchongyang.easyphone.callback.RegistrationCallback;
-
-import org.linphone.core.LinphoneCall;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

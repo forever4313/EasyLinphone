@@ -9,7 +9,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="36dp"
         android:text="@string/app_name"
         android:textColor="@android:color/darker_gray"
         android:textSize="26sp"
@@ -23,47 +22,65 @@
         android:hint="请输入呼叫号码"
         android:layout_marginTop="16dp"/>
 
-    <Button
-        android:id="@+id/call"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="16dp"
-        android:text="呼叫"/>
+        android:layout_marginTop="16dp">
+        <Button
+            android:id="@+id/audio_call"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="语音呼叫"/>
 
-    <Button
-        android:id="@+id/hang_up"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="16dp"
-        android:text="挂断"/>
+        <Button
+            android:id="@+id/video_call"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="16dp"
+            android:text="视频呼叫"/>
+
+        <Button
+            android:id="@+id/hang_up"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="16dp"
+            android:text="挂断"/>
+    </LinearLayout>
 
     <Button
         android:id="@+id/accept_call"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="16dp"
         android:visibility="gone"
         android:text="有来电，点击接听"/>
 
-    <Button
-        android:id="@+id/toggle_mute"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="16dp"
-        android:visibility="gone"
-        android:text="切换静音"/>
+        android:layout_gravity="center_horizontal">
+        <Button
+            android:id="@+id/toggle_mute"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="16dp"
+            android:visibility="gone"
+            android:text="切换静音"/>
 
-    <Button
-        android:id="@+id/toggle_speaker"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="16dp"
-        android:visibility="gone"
-        android:text="切换免提"/>
+        <Button
+            android:id="@+id/toggle_speaker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="16dp"
+            android:visibility="gone"
+            android:text="切换免提"/>
+    </LinearLayout>
 
 </LinearLayout>

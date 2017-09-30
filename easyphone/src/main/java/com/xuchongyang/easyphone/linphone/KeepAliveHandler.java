@@ -1,9 +1,11 @@
-package com.xuchongyang.easyphone;
+package com.xuchongyang.easyphone.linphone;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+
+import com.xuchongyang.easyphone.linphone.LinphoneManager;
 
 
 /**

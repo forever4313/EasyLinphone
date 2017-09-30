@@ -1,4 +1,4 @@
-package com.xuchongyang.easyphone;
+package com.xuchongyang.easyphone.service;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -6,13 +6,15 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
-import android.os.PowerManager;
 import android.os.SystemClock;
+import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.xuchongyang.easyphone.callback.PhoneCallback;
 import com.xuchongyang.easyphone.callback.RegistrationCallback;
+import com.xuchongyang.easyphone.linphone.KeepAliveHandler;
+import com.xuchongyang.easyphone.linphone.LinphoneManager;
 
 import org.linphone.core.LinphoneAddress;
 import org.linphone.core.LinphoneAuthInfo;

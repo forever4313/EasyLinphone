@@ -1,4 +1,4 @@
-package com.xuchongyang.easyphone;
+package com.xuchongyang.easyphone.linphone;
 
 /**
  * Created by Mark Xu on 17/3/14.

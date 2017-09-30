@@ -1,16 +1,21 @@
 package com.xuchongyang.easylinphone;
 
+import android.content.Intent;
+import android.opengl.GLSurfaceView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.xuchongyang.easyphone.EasyLinphone;
 import com.xuchongyang.easyphone.callback.PhoneCallback;
+import com.xuchongyang.easyphone.linphone.LinphoneManager;
 
 import org.linphone.core.LinphoneCall;
+import org.linphone.mediastream.video.AndroidVideoWindowImpl;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -56,10 +61,17 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    @OnClick(R.id.call)
-    public void callTo() {
+    @OnClick(R.id.audio_call)
+    public void audioCall() {
         String dialNum = mDialNum.getText().toString();
-        EasyLinphone.callTo(dialNum);
+        EasyLinphone.callTo(dialNum, false);
+    }
+
+    @OnClick(R.id.video_call)
+    public void videoCall() {
+        String dialNum = mDialNum.getText().toString();
+        EasyLinphone.callTo(dialNum, true);
+        startActivity(new Intent(MainActivity.this, VideoActivity.class));
     }
 
     @OnClick(R.id.hang_up)
@@ -81,4 +93,5 @@ public class MainActivity extends AppCompatActivity {
     public void toggleSpeaker() {
         EasyLinphone.toggleSpeaker(!EasyLinphone.getLC().isSpeakerEnabled());
     }
+
 }
