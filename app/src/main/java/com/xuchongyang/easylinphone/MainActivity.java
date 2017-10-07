@@ -1,5 +1,7 @@
 package com.xuchongyang.easylinphone;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -35,7 +37,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void incomingCall(LinphoneCall linphoneCall) {
                 super.incomingCall(linphoneCall);
-                Log.e(TAG, "incomingCall: ");
                 // 开启铃声免提
                 EasyLinphone.toggleSpeaker(true);
                 mCallIn.setVisibility(View.VISIBLE);
@@ -51,7 +52,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void callConnected() {
                 super.callConnected();
-                Log.e(TAG, "callConnected: ");
                 // 视频通话默认免提，语音通话默认非免提
                 EasyLinphone.toggleSpeaker(EasyLinphone.getVideoEnabled());
                 // 所有通话默认非静音
@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void callEnd() {
                 super.callEnd();
-                Log.e(TAG, "callEnd: ");
+                sendBroadcast(new Intent(VideoActivity.RECEIVE_FINISH_VIDEO_ACTIVITY));
                 mCallIn.setVisibility(View.GONE);
                 mHangUp.setVisibility(View.GONE);
                 mToggleMute.setVisibility(View.GONE);
@@ -108,5 +108,4 @@ public class MainActivity extends AppCompatActivity {
     public void toggleSpeaker() {
         EasyLinphone.toggleSpeaker(!EasyLinphone.getLC().isSpeakerEnabled());
     }
-
 }
