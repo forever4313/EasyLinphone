@@ -1,15 +1,15 @@
 package com.xuchongyang.easylinphone;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.xuchongyang.easyphone.EasyLinphone;
-import com.xuchongyang.easyphone.service.LinphoneService;
 import com.xuchongyang.easyphone.callback.RegistrationCallback;
+import com.xuchongyang.easyphone.service.LinphoneService;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

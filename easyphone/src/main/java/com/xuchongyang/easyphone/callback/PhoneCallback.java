@@ -1,7 +1,6 @@
 package com.xuchongyang.easyphone.callback;
 
 import org.linphone.core.LinphoneCall;
-import org.linphone.core.LinphoneCore;
 
 /**
  * Created by Mark Xu on 17/3/13.

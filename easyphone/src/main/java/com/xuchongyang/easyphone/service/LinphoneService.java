@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 import android.os.SystemClock;
-import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
@@ -91,9 +90,7 @@ public class LinphoneService extends Service implements LinphoneCoreListener {
     }
 
     public static void addPhoneCallback(PhoneCallback phoneCallback) {
-        if (sPhoneCallback == null) {
-            sPhoneCallback = phoneCallback;
-        }
+        sPhoneCallback = phoneCallback;
     }
 
     public static void removePhoneCallback() {
@@ -103,9 +100,7 @@ public class LinphoneService extends Service implements LinphoneCoreListener {
     }
 
     public static void addRegistrationCallback(RegistrationCallback registrationCallback) {
-        if (sRegistrationCallback == null) {
-            sRegistrationCallback = registrationCallback;
-        }
+        sRegistrationCallback = registrationCallback;
     }
 
     public static void removeRegistrationCallback() {

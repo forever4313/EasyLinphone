@@ -21,4 +21,23 @@
         android:layout_gravity="center"
         android:layout_marginTop="220dp"
         android:text="挂断"/>
+
+    <Button
+        android:id="@+id/video_mute"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginTop="220dp"
+        android:layout_marginLeft="16dp"
+        android:text="切换静音"/>
+
+    <Button
+        android:id="@+id/video_speaker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|right"
+        android:layout_marginTop="220dp"
+        android:layout_marginRight="16dp"
+        android:text="切换免提"/>
+
 </FrameLayout>

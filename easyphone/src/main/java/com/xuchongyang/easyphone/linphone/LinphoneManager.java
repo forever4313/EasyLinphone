@@ -5,7 +5,6 @@ import android.content.pm.PackageManager;
 import android.os.Handler;
 import android.os.Looper;
 
-
 import com.xuchongyang.easyphone.R;
 
 import org.linphone.core.LinphoneAddress;

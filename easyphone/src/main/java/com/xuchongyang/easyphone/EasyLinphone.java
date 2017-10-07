@@ -2,6 +2,7 @@ package com.xuchongyang.easyphone;
 
 import android.content.Context;
 import android.content.Intent;
+import android.opengl.GLSurfaceView;
 import android.view.SurfaceView;
 
 import com.xuchongyang.easyphone.callback.PhoneCallback;
@@ -11,9 +12,12 @@ import com.xuchongyang.easyphone.linphone.LinphoneUtils;
 import com.xuchongyang.easyphone.linphone.PhoneBean;
 import com.xuchongyang.easyphone.service.LinphoneService;
 
+import org.linphone.core.LinphoneCallParams;
 import org.linphone.core.LinphoneCore;
 import org.linphone.core.LinphoneCoreException;
 import org.linphone.mediastream.video.AndroidVideoWindowImpl;
+
+import static java.lang.Thread.sleep;
 
 /**
  * Created by Mark Xu on 2017/9/20.
@@ -70,11 +74,19 @@ public class EasyLinphone {
      * 登录到 SIP 服务器
      */
     public static void login() {
-        if (LinphoneService.isReady()) {
-            loginToServer();
-        } else {
-            throw new RuntimeException("LinphoneService is not ready");
-        }
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (!LinphoneService.isReady()) {
+                    try {
+                        sleep(80);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                loginToServer();
+            }
+        }).start();
     }
 
     /**
@@ -158,7 +170,7 @@ public class EasyLinphone {
     private static void loginToServer() {
         try {
             if (mUsername == null || mPassword == null || mServerIP == null) {
-                throw new RuntimeException("The account is not configure.");
+                throw new RuntimeException("The sip account is not configured.");
             }
             LinphoneUtils.getInstance().registerUserAuth(mUsername, mPassword, mServerIP);
         } catch (LinphoneCoreException e) {
@@ -166,25 +178,117 @@ public class EasyLinphone {
         }
     }
 
-    public static void setVideoWindow(Object o) {
+    public static boolean getVideoEnabled() {
+        LinphoneCallParams remoteParams = LinphoneManager.getLc().getCurrentCall().getRemoteParams();
+        return remoteParams != null && remoteParams.getVideoEnabled();
+    }
+
+    /**
+     * 设置 SurfaceView
+     * @param renderingView 远程 SurfaceView
+     * @param previewView 本地 SurfaceView
+     */
+    public static void setAndroidVideoWindow(final SurfaceView[] renderingView, final SurfaceView[] previewView) {
+        mRenderingView = renderingView[0];
+        mPreviewView = previewView[0];
+        fixZOrder(mRenderingView, mPreviewView);
+        mAndroidVideoWindow = new AndroidVideoWindowImpl(renderingView[0], previewView[0], new AndroidVideoWindowImpl.VideoWindowListener() {
+            @Override
+            public void onVideoRenderingSurfaceReady(AndroidVideoWindowImpl androidVideoWindow, SurfaceView surfaceView) {
+                setVideoWindow(androidVideoWindow);
+                renderingView[0] = surfaceView;
+            }
+
+            @Override
+            public void onVideoRenderingSurfaceDestroyed(AndroidVideoWindowImpl androidVideoWindow) {
+                removeVideoWindow();
+            }
+
+            @Override
+            public void onVideoPreviewSurfaceReady(AndroidVideoWindowImpl androidVideoWindow, SurfaceView surfaceView) {
+                mPreviewView = surfaceView;
+                setPreviewWindow(mPreviewView);
+            }
+
+            @Override
+            public void onVideoPreviewSurfaceDestroyed(AndroidVideoWindowImpl androidVideoWindow) {
+                removePreviewWindow();
+            }
+        });
+    }
+
+    /**
+     * onResume
+     */
+    public static void onResume() {
+        if (mRenderingView != null) {
+            ((GLSurfaceView) mRenderingView).onResume();
+        }
+
+        if (mAndroidVideoWindow != null) {
+            synchronized (mAndroidVideoWindow) {
+                LinphoneManager.getLc().setVideoWindow(mAndroidVideoWindow);
+            }
+        }
+    }
+
+    /**
+     * onPause
+     */
+    public static void onPause() {
+        if (mAndroidVideoWindow != null) {
+            synchronized (mAndroidVideoWindow) {
+                LinphoneManager.getLc().setVideoWindow(null);
+            }
+        }
+
+        if (mRenderingView != null) {
+            ((GLSurfaceView) mRenderingView).onPause();
+        }
+    }
+
+    /**
+     * onDestroy
+     */
+    public static void onDestroy() {
+        mPreviewView = null;
+        mRenderingView = null;
+
+        if (mAndroidVideoWindow != null) {
+            mAndroidVideoWindow.release();
+            mAndroidVideoWindow = null;
+        }
+    }
+
+    private static void fixZOrder(SurfaceView rendering, SurfaceView preview) {
+        rendering.setZOrderOnTop(false);
+        preview.setZOrderOnTop(true);
+        preview.setZOrderMediaOverlay(true); // Needed to be able to display control layout over
+    }
+
+    private static void setVideoWindow(Object o) {
         LinphoneManager.getLc().setVideoWindow(o);
     }
 
-    public static void removeVideoWindow() {
+    private static void removeVideoWindow() {
         LinphoneCore linphoneCore = LinphoneManager.getLc();
         if (linphoneCore != null) {
             linphoneCore.setVideoWindow(null);
         }
     }
 
-    public static void setPreviewWindow(Object o) {
+    private static void setPreviewWindow(Object o) {
         LinphoneManager.getLc().setPreviewWindow(o);
     }
 
-    public static void removePreviewWindow() {
+    private static void removePreviewWindow() {
         LinphoneManager.getLc().setPreviewWindow(null);
     }
 
+    /**
+     * 获取 LinphoneCore
+     * @return LinphoneCore
+     */
     public static LinphoneCore getLC() {
         return LinphoneManager.getLc();
     }

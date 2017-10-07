@@ -11,7 +11,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="16dp"
-        android:hint="请输入账号"/>
+        android:hint="请输入账号"
+        android:text="1000"/>
 
     <EditText
         android:id="@+id/sip_password"
@@ -19,7 +20,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="16dp"
-        android:hint="请输入密码"/>
+        android:hint="请输入密码"
+        android:text="123456"/>
 
     <EditText
         android:id="@+id/sip_server"
@@ -27,7 +29,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="16dp"
-        android:hint="请输入服务器地址"/>
+        android:hint="请输入服务器地址"
+        android:text="192.168.9.60"/>
 
     <Button
         android:id="@+id/press_login"

@@ -5,8 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
-import com.xuchongyang.easyphone.linphone.LinphoneManager;
-
 
 /**
  * Created by Mark Xu on 17/3/13.

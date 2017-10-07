@@ -48,6 +48,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginLeft="16dp"
+            android:visibility="gone"
             android:text="挂断"/>
     </LinearLayout>
 

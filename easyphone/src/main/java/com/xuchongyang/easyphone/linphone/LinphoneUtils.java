@@ -3,7 +3,6 @@ package com.xuchongyang.easyphone.linphone;
 import android.content.Context;
 import android.util.Log;
 
-
 import org.linphone.core.LinphoneAddress;
 import org.linphone.core.LinphoneAuthInfo;
 import org.linphone.core.LinphoneCall;
