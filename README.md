@@ -1,7 +1,7 @@
 # EasyLinphone
 EasyLinphone make it easy to import Linphone Android SDK to your project.
 
-[中文文档]()
+[中文文档](https://github.com/xcy396/EasyLinphone/blob/master/README_CN.md)
 
 ## Import
 Import LinPhone aar and EasyLinphone aar, add below in your app buid.gradle:

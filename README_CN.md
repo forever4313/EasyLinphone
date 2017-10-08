@@ -1,7 +1,7 @@
 # EasyLinphone
 EasyLinphone 可以帮助你在项目中很轻松的使用 Linphone Android SDK。
 
-[English DOC]()
+[English document](https://github.com/xcy396/EasyLinphone/blob/master/README.md)
 
 ## 导入
 
