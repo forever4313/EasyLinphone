@@ -4,7 +4,10 @@ EasyLinphone make it easy to import Linphone Android SDK to your project.
 [中文文档](https://github.com/xcy396/EasyLinphone/blob/master/README_CN.md)
 
 ## Import
-Import LinPhone aar and EasyLinphone aar, add below in your app buid.gradle:
+Download the EasyLinphone aar at [Latest release](https://github.com/xcy396/EasyLinphone/releases), and the Linphone Android SDK at [Linphone offical website](http://www.linphone.org/technical-corner/liblinphone/downloads). 
+
+Then
+copy EasyLinPhone aar and Linphone aar to your project's `libs` folder, and import them in your app buid.gradle as below:
 
 ```groovy
 android {
@@ -19,7 +22,7 @@ android {
 dependencies {
 	...
 	compile(name:'liblinphone-android-sdk', ext:'aar')
-	compile(name:'easyphone-release', ext:'aar')
+	compile(name:'easylinphone-release', ext:'aar')
 }
 ```
 

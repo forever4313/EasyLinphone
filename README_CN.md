@@ -4,6 +4,26 @@ EasyLinphone 可以帮助你在项目中很轻松的使用 Linphone Android SDK�
 [English document](https://github.com/xcy396/EasyLinphone/blob/master/README.md)
 
 ## 导入
+* 在 [Release](https://github.com/xcy396/EasyLinphone/releases) 页面下载最新的 EasyLinphone aar 包
+* 在 [Linphone 官网](http://www.linphone.org/technical-corner/liblinphone/downloads) 下载最新的 LinPhone Android aar 包
+* 将刚才下载的两个 aar 包放到项目 app 的 libs 文件夹下，在 app 的 build.gradle 添加以下引用：
+
+```groovy
+android {
+	...
+	repositories {
+	    flatDir {
+	        dirs 'libs' //this way we can find the .aar file in libs folder
+	    }
+	}
+}
+
+dependencies {
+	...
+	compile(name:'liblinphone-android-sdk', ext:'aar')
+	compile(name:'easylinphone-release', ext:'aar')
+}
+```
 
 ## 使用
 ### 1. 初始化 LinphoneService
